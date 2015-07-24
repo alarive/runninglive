@@ -18,3 +18,7 @@
 
 
 ## Temps visé : 8h
+
+## Date de livraison : dimanche 26 juillet
+
+## Temps passé : 2h

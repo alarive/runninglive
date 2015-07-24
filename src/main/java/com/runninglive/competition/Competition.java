@@ -1,6 +1,5 @@
 package com.runninglive.competition;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.runninglive.user.User;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -34,8 +33,8 @@ public class Competition {
     @ManyToOne
     private User organizer;
 
-    @JsonIgnore
     @ManyToMany
+
     @JoinTable(name = "participation", joinColumns = { @JoinColumn(name = "competition_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
     private Set<User> participants = new HashSet<User>();
 

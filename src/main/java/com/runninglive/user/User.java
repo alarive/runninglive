@@ -39,16 +39,14 @@ public class User {
 
     private int height;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "organizer")
     private Set<Competition> competitions = new HashSet<Competition>();
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "participants")
     private Set<Competition> participations = new HashSet<Competition>();
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<Role>();
 
@@ -98,5 +96,13 @@ public class User {
 
     public void setCompetitions(Set<Competition> competitions) {
         this.competitions = competitions;
+    }
+
+    public Set<Competition> getParticipations() {
+        return participations;
+    }
+
+    public void setParticipations(Set<Competition> participations) {
+        this.participations = participations;
     }
 }

@@ -33,6 +33,7 @@ public class User {
     @NotEmpty
     private String username;
 
+    @JsonIgnore
     @NotEmpty
     private String password;
 

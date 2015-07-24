@@ -21,4 +21,4 @@
 
 ## Date de livraison : dimanche 26 juillet
 
-## Temps passé : 2h
+## Temps passé : 4h

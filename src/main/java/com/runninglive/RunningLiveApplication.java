@@ -13,15 +13,15 @@ import org.springframework.context.annotation.Bean;
  * User: alarive
  */
 @SpringBootApplication
-public class RunningLive extends SpringBootServletInitializer {
+public class RunningLiveApplication extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(RunningLive.class);
+        return application.sources(RunningLiveApplication.class);
     }
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(RunningLive.class, args);
+        SpringApplication.run(RunningLiveApplication.class, args);
     }
 
     @Bean

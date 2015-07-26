@@ -62,4 +62,34 @@ public class SecurityIntegrationTest extends CommonIntegrationTestWithFixtures {
 
     }
 
+    @Test
+    public void testOnlyOwnerCanUpdateItsProfile() throws InterruptedException {
+        Map<String, Object> user = new HashMap<String, Object>();
+        user.put("username", "sahbi");
+        user.put("height", 200);
+        given().auth().basic(organizerJessica.getUsername(), organizerJessica.getPassword()).
+                contentType("application/json").
+                body(user).
+                when().
+                put("/users/3").
+                then().
+                statusCode(HttpStatus.SC_FORBIDDEN);
+
+        given().auth().basic(runnerSahbi.getUsername(), runnerSahbi.getPassword()).
+                contentType("application/json").
+                body(user).
+                when().
+                put("/users/3").
+                then().
+                statusCode(HttpStatus.SC_NO_CONTENT);
+
+        given().auth().basic(runnerSahbi.getUsername(), runnerSahbi.getPassword()).
+                when().
+                get("/users/3").
+                then().
+                statusCode(HttpStatus.SC_OK).
+                body("height", is(200));
+
+    }
+
 }

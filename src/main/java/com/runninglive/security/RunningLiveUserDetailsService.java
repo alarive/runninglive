@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,11 +34,24 @@ public class RunningLiveUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(username + " not found.");
         }
         List<GrantedAuthority> authorities = buildUserAuthority(user.getRoles());
-        return buildUserForAuthentication(user, authorities);
+        return new RunningLiveUserDetails(user, authorities);
     }
 
-    private org.springframework.security.core.userdetails.User buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+    public class RunningLiveUserDetails extends org.springframework.security.core.userdetails.User {
+        private Long id;
+
+        public RunningLiveUserDetails(User user, List<GrantedAuthority> authorities) {
+            super(user.getUsername(), user.getPassword(), authorities);
+            this.id = user.getId();
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
     }
 
     private List<GrantedAuthority> buildUserAuthority(Set<Role> userRoles) {

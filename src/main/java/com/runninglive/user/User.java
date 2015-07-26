@@ -2,10 +2,13 @@ package com.runninglive.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.runninglive.competition.Competition;
+import com.runninglive.competition.Participation;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,8 +51,8 @@ public class User {
     @OneToMany(mappedBy = "organizer")
     private Set<Competition> competitions = new HashSet<Competition>();
 
-    @ManyToMany(mappedBy = "participants")
-    private Set<Competition> participations = new HashSet<Competition>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade= CascadeType.ALL)
+    private Set<Participation> participations = new HashSet<Participation>();
 
     @JsonIgnore
     @ManyToMany
@@ -104,11 +107,11 @@ public class User {
         this.competitions = competitions;
     }
 
-    public Set<Competition> getParticipations() {
+    public Set<Participation> getParticipations() {
         return participations;
     }
 
-    public void setParticipations(Set<Competition> participations) {
+    public void setParticipations(Set<Participation> participations) {
         this.participations = participations;
     }
 }

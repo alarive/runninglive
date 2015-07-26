@@ -3,14 +3,14 @@ package com.runninglive.competition;
 import com.runninglive.user.User;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,10 +35,8 @@ public class Competition {
     @ManyToOne
     private User organizer;
 
-    @ManyToMany
-
-    @JoinTable(name = "participation", joinColumns = { @JoinColumn(name = "competition_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
-    private Set<User> participants = new HashSet<User>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "competition", cascade= CascadeType.ALL)
+    private Set<Participation> participations = new HashSet<Participation>();
 
     public Competition() { }
 
@@ -87,11 +85,11 @@ public class Competition {
         this.organizer = organizer;
     }
 
-    public Set<User> getParticipants() {
-        return participants;
+    public Set<Participation> getParticipations() {
+        return participations;
     }
 
-    public void setParticipants(Set<User> participants) {
-        this.participants = participants;
+    public void setParticipants(Set<Participation> participations) {
+        this.participations = participations;
     }
 }

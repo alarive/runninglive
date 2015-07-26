@@ -6,9 +6,9 @@ import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
 /**
@@ -27,10 +27,16 @@ public class CompetitionIntegrationTest extends CommonIntegrationTestWithFixture
                 get("/competitions").
         then().
                 statusCode(HttpStatus.SC_OK).
-                body("_embedded.competitions[0].name", is("Marathon de Paris 2016")).
-                body("_embedded.competitions[0].dateAndTime", is("2016-04-03T00:00")).
-                body("_embedded.competitions[1].name", is("Frappadingue Opale X'TREM 2015")).
-                body("_embedded.competitions[1].dateAndTime", is("2015-09-13T00:00"));
+                body("_embedded.competitions.name", containsInAnyOrder(
+                                "Marathon de Paris 2016",
+                                "Transquar Beauvais 2015",
+                                "Frappadingue Opale X'TREM 2015"
+                )).
+                body("_embedded.competitions.dateAndTime", containsInAnyOrder(
+                        "2016-04-03T00:00",
+                        "2015-09-13T00:00",
+                        "2015-10-03T09:00"
+                ));
     }
 
     /*
@@ -57,7 +63,7 @@ public class CompetitionIntegrationTest extends CommonIntegrationTestWithFixture
                 get("/users/3/participations").
         then().
                 statusCode(HttpStatus.SC_OK).
-                body("_embedded.competitions[0].name", is("Frappadingue Opale X'TREM 2015"));
+                body("_embedded.participations.competitionName", containsInAnyOrder("Marathon de Paris 2016", "Frappadingue Opale X'TREM 2015"));
     }
 
     /*
@@ -90,10 +96,10 @@ public class CompetitionIntegrationTest extends CommonIntegrationTestWithFixture
     public void testOrganizerCanListRunnersInACompetition() {
         given().auth().basic(organizerJessica.getUsername(), organizerJessica.getPassword()).
         when().
-                get("/competitions/1/participants").
+                get("/competitions/1/participations").
         then().
                 statusCode(HttpStatus.SC_OK).
-                body("_embedded.users.username", is(Arrays.asList(new String[]{"aurelien", "sahbi"})));
+                body("_embedded.participations.username", containsInAnyOrder("aurelien", "sahbi"));
     }
 
     /*
@@ -106,6 +112,6 @@ public class CompetitionIntegrationTest extends CommonIntegrationTestWithFixture
                 get("/users").
         then().
                 statusCode(HttpStatus.SC_OK).
-                body("_embedded.users.height", is(Arrays.asList(new Integer[]{185, 180, 182})));
+                body("_embedded.users.height", containsInAnyOrder(185, 180, 182));
     }
 }

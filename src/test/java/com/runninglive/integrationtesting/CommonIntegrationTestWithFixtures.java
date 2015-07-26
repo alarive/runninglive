@@ -2,7 +2,6 @@ package com.runninglive.integrationtesting;
 
 import com.jayway.restassured.RestAssured;
 import com.runninglive.RunningLiveApplication;
-import com.runninglive.competition.Competition;
 import com.runninglive.competition.CompetitionRepository;
 import com.runninglive.user.RoleRepository;
 import com.runninglive.user.User;
@@ -38,8 +37,6 @@ public class CommonIntegrationTestWithFixtures {
     protected User organizerJessica;
     protected User runnerSahbi;
     protected User developerAurelien;
-    protected Competition marathon;
-    protected Competition frappadingue;
 
     @Value("${local.server.port}")
     private int port;
@@ -49,8 +46,6 @@ public class CommonIntegrationTestWithFixtures {
         organizerJessica = userRepository.findByUsername("jessica");
         runnerSahbi = userRepository.findByUsername("sahbi");
         developerAurelien = userRepository.findByUsername("aurelien");
-        marathon = competitionRepository.findOne(1L);
-        frappadingue = competitionRepository.findOne(2L);
         RestAssured.port = port;
     }
 

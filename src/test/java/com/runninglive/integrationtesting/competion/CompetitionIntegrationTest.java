@@ -6,7 +6,6 @@ import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static com.jayway.restassured.RestAssured.given;
@@ -103,9 +102,9 @@ public class CompetitionIntegrationTest extends CommonIntegrationTestWithFixture
     @Test
     public void testOrganizerCanListRunnersHeight() {
         given().auth().basic(organizerJessica.getUsername(), organizerJessica.getPassword()).
-                when().
+        when().
                 get("/users").
-                then().
+        then().
                 statusCode(HttpStatus.SC_OK).
                 body("_embedded.users.height", is(Arrays.asList(new Integer[]{185, 180, 182})));
     }

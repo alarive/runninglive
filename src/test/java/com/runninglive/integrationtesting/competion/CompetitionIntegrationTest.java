@@ -96,4 +96,17 @@ public class CompetitionIntegrationTest extends CommonIntegrationTestWithFixture
                 statusCode(HttpStatus.SC_OK).
                 body("_embedded.users.username", is(Arrays.asList(new String[]{"aurelien", "sahbi"})));
     }
+
+    /*
+        User story #9 : En tant qu'organisateur, je voudrais pouvoir lister tous les coureurs inscrits à une compétition.
+     */
+    @Test
+    public void testOrganizerCanListRunnersHeight() {
+        given().auth().basic(organizerJessica.getUsername(), organizerJessica.getPassword()).
+                when().
+                get("/users").
+                then().
+                statusCode(HttpStatus.SC_OK).
+                body("_embedded.users.height", is(Arrays.asList(new Integer[]{185, 180, 182})));
+    }
 }

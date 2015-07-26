@@ -38,6 +38,13 @@ public class Competition {
     @JoinTable(name = "participation", joinColumns = { @JoinColumn(name = "competition_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
     private Set<User> participants = new HashSet<User>();
 
+    public Competition() { }
+
+    public Competition(String name, LocalDateTime dateAndTime) {
+        this.name = name;
+        this.dateAndTime = dateAndTime;
+    }
+
     public Long getId() {
         return id;
     }

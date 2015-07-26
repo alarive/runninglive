@@ -1,3 +1,10 @@
+delete from participation;
+delete from competition;
+delete from user_role;
+delete from user;
+delete from role;
+
+
 insert into user(id, username, password, height) values (1, 'aurelien', '4ur3l13n', 185);
 insert into user(id, username, password, height) values (2,'jessica','j3ss1c4', 180);
 insert into user(id, username, password, height) values (3,'sahbi','s4hb1', 182);

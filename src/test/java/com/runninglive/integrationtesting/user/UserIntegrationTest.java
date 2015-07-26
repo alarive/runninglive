@@ -2,7 +2,6 @@ package com.runninglive.integrationtesting.user;
 
 import com.runninglive.integrationtesting.CommonIntegrationTestWithFixtures;
 import org.apache.http.HttpStatus;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import static com.jayway.restassured.RestAssured.given;
@@ -34,7 +33,7 @@ public class UserIntegrationTest extends CommonIntegrationTestWithFixtures {
         given().auth().basic(organizerJessica.getUsername(), organizerJessica.getPassword()).
         when().
                 get("/users/{id}", organizerJessica.getId()).
-                then().
+        then().
                 statusCode(HttpStatus.SC_OK).
                 body("username", is(organizerJessica.getUsername()));
     }

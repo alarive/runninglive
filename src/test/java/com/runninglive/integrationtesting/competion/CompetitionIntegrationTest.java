@@ -1,8 +1,11 @@
 package com.runninglive.integrationtesting.competion;
 
+import com.runninglive.competition.Competition;
 import com.runninglive.integrationtesting.CommonIntegrationTestWithFixtures;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
+
+import java.time.LocalDateTime;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
@@ -24,9 +27,9 @@ public class CompetitionIntegrationTest extends CommonIntegrationTestWithFixture
         then().
                 statusCode(HttpStatus.SC_OK).
                 body("_embedded.competitions[0].name", is("Marathon de Paris 2016")).
-                body("_embedded.competitions[0].date", is("2016-04-03T00:00")).
+                body("_embedded.competitions[0].dateAndTime", is("2016-04-03T00:00")).
                 body("_embedded.competitions[1].name", is("Frappadingue Opale X'TREM 2015")).
-                body("_embedded.competitions[1].date", is("2015-09-13T00:00"));
+                body("_embedded.competitions[1].dateAndTime", is("2015-09-13T00:00"));
     }
 
     /*
@@ -35,10 +38,47 @@ public class CompetitionIntegrationTest extends CommonIntegrationTestWithFixture
     @Test
     public void testRunnerCanKnowCompetitionPlace() {
         given().auth().basic(runnerSahbi.getUsername(), runnerSahbi.getPassword()).
-                when().
+        when().
                 get("/competitions/1").
-                then().
+        then().
                 statusCode(HttpStatus.SC_OK).
                 body("place", is("Paris"));
+    }
+
+    /*
+        User story #7 : En tant que coureur, je voudrais pouvoir lister toutes les compétitions auxquelles
+        je suis inscrit ou j'ai participé.
+     */
+    @Test
+    public void testRunnerCanListItsCompetitions() {
+        given().auth().basic(runnerSahbi.getUsername(), runnerSahbi.getPassword()).
+        when().
+                get("/users/3/participations").
+        then().
+                statusCode(HttpStatus.SC_OK).
+                body("_embedded.competitions[0].name", is("Frappadingue Opale X'TREM 2015"));
+    }
+
+    /*
+        User story #8 : En tant qu'organisateur, je voudrais pouvoir créer une compétition
+     */
+    @Test
+    public void testOrganizerCanCreateACompetition() {
+        Competition competition = new Competition("Les foulees de la rue", LocalDateTime.parse("2015-06-06T08:00:00"));
+        given().auth().basic(organizerJessica.getUsername(), organizerJessica.getPassword()).
+                contentType("application/json")
+                .body(competition)
+        .when().
+                post("/competitions").
+        then().
+                statusCode(HttpStatus.SC_CREATED);
+
+
+        given().auth().basic(organizerJessica.getUsername(), organizerJessica.getPassword()).
+        when().
+                get("/competitions/4").
+        then().
+                statusCode(HttpStatus.SC_OK).
+        body("name", is("Les foulees de la rue"));
     }
 }

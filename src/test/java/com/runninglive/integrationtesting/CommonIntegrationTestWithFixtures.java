@@ -24,7 +24,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @SpringApplicationConfiguration(classes = RunningLiveApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
-@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:import.sql")
+@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:import-test-data.sql")
 public class CommonIntegrationTestWithFixtures {
     @Autowired
     protected CompetitionRepository competitionRepository;

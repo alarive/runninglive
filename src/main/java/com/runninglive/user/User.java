@@ -25,6 +25,15 @@ import java.util.Set;
 @Entity
 public class User {
 
+    public User() { }
+
+    public User(String username, String password, int height, Set<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.height = height;
+        this.roles = roles;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

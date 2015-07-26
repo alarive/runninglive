@@ -13,6 +13,12 @@ import java.util.Set;
 @Entity
 public class Role {
 
+    public Role() { }
+
+    public Role(String roleName) {
+        this.roleName = roleName;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

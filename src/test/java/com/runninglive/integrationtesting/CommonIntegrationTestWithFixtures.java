@@ -37,6 +37,7 @@ public class CommonIntegrationTestWithFixtures {
 
     protected User organizerJessica;
     protected User runnerSahbi;
+    protected User developerAurelien;
     protected Competition marathon;
     protected Competition frappadingue;
 
@@ -47,6 +48,7 @@ public class CommonIntegrationTestWithFixtures {
     public void setup() {
         organizerJessica = userRepository.findByUsername("jessica");
         runnerSahbi = userRepository.findByUsername("sahbi");
+        developerAurelien = userRepository.findByUsername("aurelien");
         marathon = competitionRepository.findOne(1L);
         frappadingue = competitionRepository.findOne(2L);
         RestAssured.port = port;

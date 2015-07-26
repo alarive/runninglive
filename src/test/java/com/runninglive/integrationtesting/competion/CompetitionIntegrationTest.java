@@ -28,4 +28,17 @@ public class CompetitionIntegrationTest extends CommonIntegrationTestWithFixture
                 body("_embedded.competitions[1].name", is("Frappadingue Opale X'TREM 2015")).
                 body("_embedded.competitions[1].date", is("2015-09-13T00:00"));
     }
+
+    /*
+        User story #6 : En tant que coureur, je voudrais connaître le lieu d'une compétition.
+     */
+    @Test
+    public void testRunnerCanKnowCompetitionPlace() {
+        given().auth().basic(runnerSahbi.getUsername(), runnerSahbi.getPassword()).
+                when().
+                get("/competitions/1").
+                then().
+                statusCode(HttpStatus.SC_OK).
+                body("place", is("Paris"));
+    }
 }

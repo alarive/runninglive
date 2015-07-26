@@ -30,6 +30,8 @@ public class Competition {
 
     private LocalDateTime dateAndTime;
 
+    private String place;
+
     @ManyToOne
     private User organizer;
 
@@ -61,12 +63,20 @@ public class Competition {
         this.name = name;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDateTime getDateAndTime() {
         return dateAndTime;
     }
 
-    public void setDate(LocalDateTime dateAndTime) {
+    public void setDateAndTime(LocalDateTime dateAndTime) {
         this.dateAndTime = dateAndTime;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public User getOrganizer() {

@@ -22,9 +22,9 @@ insert into user_role(user_id, role_id) values (1, 4);
 insert into user_role(user_id, role_id) values (2, 4);
 insert into user_role(user_id, role_id) values (3, 4);
 
-insert into competition(id, date_and_time, name, organizer_id) values (1, '2016-04-03', 'Marathon de Paris 2016', 2);
-insert into competition(id, date_and_time, name, organizer_id) values (2, '2015-09-13', 'Frappadingue Opale X''TREM 2015', 2);
-insert into competition(id, date_and_time, name, organizer_id) values (3, '2015-10-03T09:00:00', 'Transquar Beauvais 2015', 2);
+insert into competition(id, date_and_time, name, place, organizer_id) values (1, '2016-04-03', 'Marathon de Paris 2016', 'Paris', 2);
+insert into competition(id, date_and_time, name, place, organizer_id) values (2, '2015-09-13', 'Frappadingue Opale X''TREM 2015', 'Montreuil-sur-Mer', 2);
+insert into competition(id, date_and_time, name, place, organizer_id) values (3, '2015-10-03T09:00:00', 'Transquar Beauvais 2015', 'Beauvais', 2);
 
 insert into participation(competition_id, user_id) values (1, 1);
 insert into participation(competition_id, user_id) values (3, 1);

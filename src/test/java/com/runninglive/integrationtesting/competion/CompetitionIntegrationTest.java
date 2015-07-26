@@ -6,6 +6,8 @@ import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
@@ -80,5 +82,18 @@ public class CompetitionIntegrationTest extends CommonIntegrationTestWithFixture
         then().
                 statusCode(HttpStatus.SC_OK).
         body("name", is("Les foulees de la rue"));
+    }
+
+    /*
+        User story #9 : En tant qu'organisateur, je voudrais pouvoir lister tous les coureurs inscrits à une compétition.
+     */
+    @Test
+    public void testOrganizerCanListRunnersInACompetition() {
+        given().auth().basic(organizerJessica.getUsername(), organizerJessica.getPassword()).
+        when().
+                get("/competitions/1/participants").
+        then().
+                statusCode(HttpStatus.SC_OK).
+                body("_embedded.users.username", is(Arrays.asList(new String[]{"aurelien", "sahbi"})));
     }
 }

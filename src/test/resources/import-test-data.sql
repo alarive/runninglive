@@ -27,5 +27,6 @@ insert into competition(id, date_and_time, name, place, organizer_id) values (2,
 insert into competition(id, date_and_time, name, place, organizer_id) values (3, '2015-10-03T09:00:00', 'Transquar Beauvais 2015', 'Beauvais', 2);
 
 insert into participation(competition_id, user_id) values (1, 1);
+insert into participation(competition_id, user_id) values (1, 3);
 insert into participation(competition_id, user_id) values (3, 1);
 insert into participation(competition_id, user_id) values (2, 3);

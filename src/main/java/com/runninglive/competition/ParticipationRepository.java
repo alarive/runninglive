@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface ParticipationRepository extends JpaRepository<Participation, Long> {
 
     @Override
-    <P extends Participation> P save(P participation);
+    @PreAuthorize("#participation.user.id == authentication.principal.id")
+    <P extends Participation> P save(@Param("participation") P participation);
 
 }

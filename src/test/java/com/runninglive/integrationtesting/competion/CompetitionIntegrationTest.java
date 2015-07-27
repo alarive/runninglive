@@ -6,6 +6,8 @@ import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -113,5 +115,29 @@ public class CompetitionIntegrationTest extends CommonIntegrationTestWithFixture
         then().
                 statusCode(HttpStatus.SC_OK).
                 body("_embedded.users.height", containsInAnyOrder(185, 180, 182));
+    }
+
+    /*
+        User story #9 : En tant que coureur, je voudrais pouvoir ajouter mon temps à une compétition à laquelle j'ai participé.
+     */
+    @Test
+    public void testUserCanUpdateItsTime() throws InterruptedException {
+        Map<String, String> time = new HashMap<String, String>();
+        time.put("time", "PT4H14M50S");
+
+        given().auth().basic(runnerSahbi.getUsername(), runnerSahbi.getPassword()).
+                contentType("application/json").
+                body(time).
+                when().
+                put("/participations/2").
+                then().
+                statusCode(HttpStatus.SC_NO_CONTENT);
+
+        given().auth().basic(runnerSahbi.getUsername(), runnerSahbi.getPassword()).
+                when().
+                get("/participations/2").
+                then().
+                statusCode(HttpStatus.SC_OK).
+                body("time", is("PT4H14M50S"));
     }
 }

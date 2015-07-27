@@ -7,13 +7,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import java.time.Duration;
 
 /**
  * User: alarive
  */
 @Entity
+@Table(
+        name="participation",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "competition_id"})
+)
 public class Participation {
 
     @Id
@@ -52,12 +58,10 @@ public class Participation {
         this.competition = competition;
     }
 
-    @Transient
     public String getUsername() {
         return user.getUsername();
     }
 
-    @Transient
     public String getCompetitionName() {
         return competition.getName();
     }

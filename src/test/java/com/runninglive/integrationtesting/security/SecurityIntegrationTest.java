@@ -92,4 +92,32 @@ public class SecurityIntegrationTest extends CommonIntegrationTestWithFixtures {
 
     }
 
+    @Test
+    public void testOnlyOwnerCanUpdateItsTime() throws InterruptedException {
+        Map<String, String> time = new HashMap<String, String>();
+        time.put("time", "PT4H14M50S");
+        given().auth().basic(organizerJessica.getUsername(), organizerJessica.getPassword()).
+                contentType("application/json").
+                body(time).
+                when().
+                put("/participations/2").
+                then().
+                statusCode(HttpStatus.SC_FORBIDDEN);
+
+        given().auth().basic(runnerSahbi.getUsername(), runnerSahbi.getPassword()).
+                contentType("application/json").
+                body(time).
+                when().
+                put("/participations/2").
+                then().
+                statusCode(HttpStatus.SC_NO_CONTENT);
+
+        given().auth().basic(runnerSahbi.getUsername(), runnerSahbi.getPassword()).
+                when().
+                get("/participations/2").
+                then().
+                statusCode(HttpStatus.SC_OK).
+                body("time", is("PT4H14M50S"));
+    }
+
 }

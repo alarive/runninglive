@@ -12,18 +12,18 @@ import org.springframework.stereotype.Component;
  * User: alarive
  */
 @Component
-@RepositoryEventHandler(Competition.class)
-public class CompetitionEventHandler {
+@RepositoryEventHandler(Participation.class)
+public class ParticipationEventHandler {
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @Autowired
-    private CompetitionRepository competitionRepository;
+    ParticipationRepository participationRepository;
 
     @HandleBeforeCreate
-    public void setOrganizerBeforeCreate(Competition competition) {
+    public void setUserBeforeCreate(Participation participation) {
         Long id = ((RunningLiveUserDetailsService.RunningLiveUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        competition.setOrganizer(userRepository.findOne(id));
+        participation.setUser(userRepository.findOne(id));
     }
 }

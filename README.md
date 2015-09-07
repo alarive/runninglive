@@ -1,6 +1,6 @@
-# Running Live
+# Running Live - Sample CRUD REST API using various spring-boot components.
 
-Pour lancer ce projet :
+To run this project:
 
 ```
 mvn package
@@ -8,34 +8,29 @@ java -jar target/runninglive-1.0-SNAPSHOT.jar
 
 ```
 
-Pour tester, se rendre sur http://localhost:8080 après lancement 
-(compte : aurelien/4ur3l13n).
+Then just point your browser to http://localhost:8080 
+(use login : aurelien/4ur3l13n).
 
-Le fichier src/main/resources/import.sql est executé au lancement de
-l'application, vous y trouverez entre autres une liste des utilisateurs/mots de
-passe créés par défaut.
+src/main/resources/import.sql is used to init the database when the application
+starts.
 
-Les tests d'intégration contiennent des exemples d'appels de l'API.
+# Sample REST calls
 
+curl -u "aurelien:4ur3l13n" http://localhost:8080/
 
-## User stories choisies
+## List users
 
-|Id  |Tâche                                                                                                                  |Valeur business  |
-|----|-----------------------------------------------------------------------------------------------------------------------|---------------- |
-| 1  |En tant que développeur, je voudrais avoir un healthcheck afin de m'assurer que le service fonctionne.                 |5                |
-| 2  |En tant que coureur, je voudrais pouvoir me connecter au web service.                                                  |4                |
-| 3  |En tant qu'organisateur, je voudrais pouvoir me connecter au web service.                                              |5                |
-| 4  |En tant qu'organisateur, je voudrais pouvoir lister toutes les compétitions.                                           |4                |
-| 5  |En tant qu'organisateur, je voudrais qu'une compétition ait un nom et une date.                                        |3                |
-| 6  |En tant que coureur, je voudrais connaître le lieu d'une compétition.                                                  |2                |
-| 7  |En tant que coureur, je voudrais pouvoir lister toutes les compétitions auxquelles je suis inscrit ou j'ai participé.  |3                |
-| 8  |En tant qu'organisateur, je voudrais pouvoir créer une compétition.                                                    |4                |
-| 9  |En tant que coureur, je voudrais pouvoir ajouter mon temps à une compétition à laquelle j'ai participé.                |2                |
-|10  |En tant qu'organisateur, je voudrais pouvoir lister tous les coureurs inscrits à une compétition.                      |2                |
-|11  |En tant qu'organisateur, je voudrais pouvoir connaître la taille des coureurs.                                         |1                |
+curl -u "aurelien:4ur3l13n" http://localhost:8080/users
 
-## Temps visé : 8h
+## Get user #1
 
-## Date de livraison : dimanche 26 juillet
+curl -u "aurelien:4ur3l13n" http://localhost:8080/users/1
 
-## Temps passé : 9h30
+## Get user participations to a competition
+
+curl -u "aurelien:4ur3l13n" http://localhost:8080/users/1/participations
+
+## Update user
+
+curl -u "aurelien:4ur3l13n" -H 'Content-Type: application/json' -X PUT -d '{"username": "jean-patrick"}' http://localhost:8080/users/2
+
